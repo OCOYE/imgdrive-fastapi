@@ -2,8 +2,9 @@
 A simple project to backup your photos using sqlite, sqlmodel, python and fastapi.
 
 # Needed
-1. sqlmodel, fastapi, aiofiles, pathlib and contextlib.
-2. Python3
+1. Python3
+2. sqlmodel, fastapi, aiofiles, pathlib and contextlib.
+
 **Recommended to install this packages using pip**
 
 # How to execute?
