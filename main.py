@@ -1,5 +1,6 @@
 from typing import Annotated
 from fastapi import FastAPI, File, UploadFile, HTTPException, Depends
+from fastapi.responses import FileResponse
 import aiofiles
 from pathlib import Path
 from sqlmodel import Session, select
@@ -24,6 +25,16 @@ async def read_item(q: str):
      return {"Exists": True, "archive": q}
   else:
      return {"Exists": False, "archive": q}
+
+@app.get("/download/{filename}")
+async def download_file(filename: str):
+  archive = UPLOAD_DIR / filename
+
+  if not archive.is_file():
+      raise HTTPException(status_code=404, detail="Archive doesn't exists")
+  return FileResponse(path=archive, filename=filename)
+    
+
 
 @app.post("/upload/stream")
 async def upload_stream(
