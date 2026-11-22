@@ -22,6 +22,13 @@ app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 
 templates = Jinja2Templates(directory="templates")
 
+@app.post("/rename")
+async def original_file(q: str, a: str):
+   old_archive = Path("uploads") / q
+   new_archive = Path("uploads") / a
+   if old_archive.exists():
+       old_archive.rename(new_archive)
+   return RedirectResponse(url="/", status_code=303)
 @app.get("/")
 async def homepage(request: Request) -> Response:
     names = [archive.name for archive in Path("uploads").iterdir() if archive.is_file()]
