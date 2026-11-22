@@ -1,10 +1,12 @@
 from typing import Annotated
-from fastapi import FastAPI, File, UploadFile, HTTPException, Depends
+from fastapi import FastAPI, File, UploadFile, HTTPException, Depends, Request, Response
 from fastapi.responses import FileResponse
 import aiofiles
 from pathlib import Path
 from sqlmodel import Session, select
 from contextlib import asynccontextmanager
+from fastapi.staticfiles import StaticFiles
+from starlette.templating import Jinja2Templates
 
 from database import Filedb, create_db_and_tables, get_session
 
@@ -15,6 +17,15 @@ async def lifespan(app: FastAPI):
     create_db_and_tables()
     yield
 app = FastAPI(lifespan=lifespan)
+
+app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
+
+templates = Jinja2Templates(directory="templates")
+
+@app.get("/")
+async def homepage(request: Request) -> Response:
+    names = [archive.name for archive in Path("uploads").iterdir() if archive.is_file()]
+    return templates.TemplateResponse(request, "index.html", {"photos": names})
 
 @app.get("/search")
 async def read_item(q: str):
