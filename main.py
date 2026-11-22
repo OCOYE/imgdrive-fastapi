@@ -19,6 +19,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 
 app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 templates = Jinja2Templates(directory="templates")
 
@@ -40,7 +41,7 @@ async def read_item(q: str):
   archive = upload_folder / q
   
   if archive.is_file():
-     return {"Exists": True, "archive": q}
+     return {"Exists": True, "archive": q, "Acess_here:": f"localhost:8000/uploads/{q}"}
   else:
      return {"Exists": False, "archive": q}
 
