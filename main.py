@@ -12,6 +12,7 @@ from database import Filedb, create_db_and_tables, get_session
 
 UPLOAD_DIR = Path("uploads")
 UPLOAD_DIR.mkdir(exist_ok=True)
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     create_db_and_tables()
