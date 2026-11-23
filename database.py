@@ -4,14 +4,6 @@ class Filedb(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     file_rg: str
 
-class User(SQLModel, table=True):
-    id: int | None = Field(default=None, primary_key=True)
-    name: str
-    email: str
-    password: str
-    user_type: str
-    token: str
-    user_id: str
 sqlite_file_name = "database.db"
 sqlite_url = f"sqlite:///{sqlite_file_name}"
 engine = create_engine(sqlite_url, echo=True)
