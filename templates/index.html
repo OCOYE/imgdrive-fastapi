@@ -9,20 +9,5 @@
     {% for photo in photos %}
        <img src="/uploads/{{ photo }}" width="250">
     {% endfor %}
-    <dialog id="lightbox" onclick="if (event.target === this) this.close()">
-        <button class="fechar" onclick="lightbox.close()" aria-label="Fechar">&times;</button>
-        <img id="lightbox-img" src="" alt="Foto ampliada" onclick="this.classList.toggle('zoom-in')">
-    </dialog>
-
-    <script>
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImg = document.getElementById('lightbox-img');
-
-        function abrirZoom(src) {
-            lightboxImg.src = src;
-            lightboxImg.classList.remove('zoom-in');
-            lightbox.showModal();
-        }
-    </script>
 </body>
 </html>
